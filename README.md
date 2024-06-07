@@ -1,8 +1,6 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# League of Memory
+Minigame inspired on the League of Legends introduction screens.
+- The rules are simple, you must select all the characters shown without repeating, each time you get it right they will change position randomly.
+- By selecting all the cards you will level up, each time the number of characters will increase.
+- Points will be accumulated for each success, but failing will reset the level score.
+*Good luck*
