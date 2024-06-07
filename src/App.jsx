@@ -8,7 +8,7 @@ export function App() {
   const [cards, setCards] = useState(4)
   const [level, setlevel] = useState(1)
   const [champList, setList] = useState(getRandomChampions(cards))
-  const [imgLoad, setLoaded] = useState(true)
+  const [imgLoad, setLoaded] = useState(false)
   useEffect(() => {
     charge()
     async function charge() {
@@ -40,8 +40,8 @@ export function App() {
   return (
     <>
       <header><span>Level: {level}</span><span>Score: {score}</span><span>Champions: {cardsCount}/{cards}</span></header>
-      {imgLoad && <Game modifyScore={modifyScore} setCount={setCount} champList={champList} />}
-      {cardsCount == 0 &&<footer>Pick all champions without repeat</footer>}
+      {imgLoad ? <Game modifyScore={modifyScore} setCount={setCount} champList={champList} /> : false}
+      {cardsCount == 0 && <footer>Pick all champions without repeat</footer>}
     </>
   )
 }

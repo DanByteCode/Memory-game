@@ -1,8 +1,8 @@
 import champions from './champions.json'
 const URL_API = "https://ddragon.leagueoflegends.com/"
-const championList = await fetchChampions()
+const championList = champions
 
-export const getRandomChampions = (numbers = 1) => {
+export function getRandomChampions (numbers = 1) {
   const list = []
   const len = championList.length
   let cont = 0
@@ -19,17 +19,21 @@ export const getRandomChampions = (numbers = 1) => {
 
 export async function loadImgs(list) {
   const PREFIX = URL_API + "cdn/img/champion/loading/"
-  const promises = [];
+  const promises = []
+  const sources = []
   for (const element of list) {
-    const image = new Image();
+    const image = new Image()
     promises.push(new Promise((resolve, reject) => {
-      image.src = `${PREFIX}${element.id}_0.jpg`;
-      image.onload = () => resolve();
+      image.src = `${PREFIX}${element.id}_0.jpg`
+      image.onload = () => {
+        sources.push(image)
+        resolve() 
+      }
       image.onerror = () => reject();
-    }));
+    }))
   }
-  await Promise.all(promises);
-  return true
+  await Promise.all(promises)
+  return sources
 }
 export async function fetchChampions() {
   try {
