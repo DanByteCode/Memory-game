@@ -27,7 +27,6 @@ export function App() {
         setlevel(level + 1)
         setCards(newLevel)
         setList(getRandomChampions(newLevel))
-        console.log(newLevel)
       } else {
         setCount(cardsCount + 1)
       }
