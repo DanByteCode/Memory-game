@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react'
 import Game from './Game.jsx'
-import { getRandomChampions, loadImgs } from './championList.js'
+import { getRandomChampions } from './championList.js'
+import { useChampions } from './hooks/useChampions.js'
 
 export function App() {
+  const champions = useChampions()
   const [cardsCount, setCount] = useState(0)
   const [score, setScore] = useState(0)
   const [cards, setCards] = useState(4)
   const [level, setlevel] = useState(1)
-  const [champList, setList] = useState(getRandomChampions(cards))
-  const [imgLoad, setLoaded] = useState(false)
+  const [champList, setList] = useState(null)
+
   useEffect(() => {
-    charge()
-    async function charge() {
-      setLoaded(await loadImgs(champList))
+    console.log(champions)
+    if (champions != null) {
+      const random = getRandomChampions(champions, cards)
+      console.log(random)
+      setList(random)
     }
-    return () => {
-      setLoaded(false)
-    }
-  }, [champList])
+  }, [champions, cards])
 
   function modifyScore(action) {
     if (action) {
@@ -26,7 +27,6 @@ export function App() {
         setCount(0)
         setlevel(level + 1)
         setCards(newLevel)
-        setList(getRandomChampions(newLevel))
       } else {
         setCount(cardsCount + 1)
       }
@@ -38,8 +38,23 @@ export function App() {
   }
   return (
     <>
-      <header><span>Level: {level}</span><span>Score: {score}</span><span>Champions: {cardsCount}/{cards}</span></header>
-      {imgLoad ? <Game modifyScore={modifyScore} setCount={setCount} champList={champList} /> : false}
+      <header>
+        <span>Level: {level}</span>
+        <span>Score: {score}</span>
+        <span>
+          Champions: {cardsCount}/{cards}
+        </span>
+      </header>
+      {champList ? (
+        <Game
+          modifyScore={modifyScore}
+          setCount={setCount}
+          champList={champList}
+          setList={setList}
+        />
+      ) : (
+        false
+      )}
       {cardsCount == 0 && <footer>Pick all champions without repeat</footer>}
     </>
   )

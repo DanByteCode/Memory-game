@@ -1,8 +1,6 @@
-import champions from './champions.json'
 const URL_API = "https://ddragon.leagueoflegends.com/"
-const championList = champions
-
-export function getRandomChampions (numbers = 1) {
+export function getRandomChampions (championList, numbers = 1) {
+  if(!championList) return null
   const list = []
   const len = championList.length
   let cont = 0
@@ -14,44 +12,19 @@ export function getRandomChampions (numbers = 1) {
       cont++
     }
   }
+  console.log(list)
+  preloadImgs(list)
   return list
 }
 
-export async function loadImgs(list) {
+async function preloadImgs (list) {
   const PREFIX = URL_API + "cdn/img/champion/loading/"
-  const promises = []
   const sources = []
-  for (const element of list) {
+
+  list.map(async (champ) => {
     const image = new Image()
-    promises.push(new Promise((resolve, reject) => {
-      image.src = `${PREFIX}${element.id}_0.jpg`
-      image.onload = () => {
-        sources.push(image)
-        resolve() 
-      }
-      image.onerror = () => reject();
-    }))
-  }
-  await Promise.all(promises)
+    image.src = `${PREFIX}${champ.id}_0.jpg`
+    sources.push(image)
+  })
   return sources
-}
-export async function fetchChampions() {
-  try {
-    const resVersion = await fetch(URL_API + "realms/na.json")
-    const version = await resVersion.json()
-    const resChampion = await fetch(`${URL_API}cdn/${version.v}/data/en_US/champion.json`)
-    const result = await resChampion.json()
-    const champions = result.data
-    const list = []
-    for (const champ in champions) {
-      list.push({
-        id: champ,
-        name: champions[champ].name,
-        title: champions[champ].title
-      })
-    }
-    return list
-  } catch (e) {
-    return champions
-  }
 }
