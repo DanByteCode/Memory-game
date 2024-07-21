@@ -43,21 +43,9 @@ main {
   column-gap: 8px;
   row-gap: 18px;
   margin-inline: auto;
-  animation: intro 1s;
-}
-
-@keyframes intro {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 .card {
-  min-width: 100px;
   max-width: max-content;
   cursor: pointer;
   border: 3px groove;
@@ -66,20 +54,9 @@ main {
   position: relative;
   height: 40vh;
   object-position: center;
-  background-color: black;
-  transition: transform 0.4s;
   overflow: hidden;
 }
 
-@keyframes fadein {
-  from {
-    background-color: rgb(0, 0, 0);
-  }
-
-  to {
-    background-color: rgba(0, 0, 0, 0);
-  }
-}
 
 .card:hover {
   outline: 2px solid goldenrod;
